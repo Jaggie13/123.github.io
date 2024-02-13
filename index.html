@@ -60,6 +60,29 @@
       };
       bgImage.src = "background.jpg"; // 使用固定的背景图片 URL
     }
+    // 添加长按保存图片功能
+    var canvas = document.getElementById("canvas");
+    canvas.addEventListener("touchstart", handleTouchStart, false);
+    canvas.addEventListener("touchend", handleTouchEnd, false);
+    var touchDuration, touchTimer;
+
+    function handleTouchStart(event) {
+      touchTimer = setTimeout(function() {
+        saveCertificate();
+      }, 500); // 长按时间设定为0.5秒
+    }
+
+    function handleTouchEnd(event) {
+      clearTimeout(touchTimer);
+    }
+
+    function saveCertificate() {
+      var canvas = document.getElementById("canvas");
+      var link = document.createElement('a');
+      link.download = 'certificate.png';
+      link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      link.click();
+    }
   </script>
 </body>
 </html>

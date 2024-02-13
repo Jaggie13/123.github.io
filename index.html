@@ -19,7 +19,6 @@
   <div class="container">
     <input type="text" id="textInput" placeholder="请输入你的名字">
     <button onclick="generateImage()">生成证书</button>
-    <button id="saveBtn">保存证书</button>
     <br>
     <canvas id="canvas" width="400" height="300"></canvas>
   </div>
@@ -54,8 +53,21 @@
       bgImage.src = "background.jpg"; // 使用固定的背景图片 URL
     }
 
-    // 添加保存证书功能
-    document.getElementById("saveBtn").addEventListener("click", saveCertificate);
+    // 添加长按保存图片功能
+    var canvas = document.getElementById("canvas");
+    canvas.addEventListener("touchstart", handleTouchStart, false);
+    canvas.addEventListener("touchend", handleTouchEnd, false);
+    var touchDuration, touchTimer;
+
+    function handleTouchStart(event) {
+      touchTimer = setTimeout(function() {
+        saveCertificate();
+      }, 1000); // 长按时间设定为1秒
+    }
+
+    function handleTouchEnd(event) {
+      clearTimeout(touchTimer);
+    }
 
     function saveCertificate() {
       var canvas = document.getElementById("canvas");

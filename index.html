@@ -19,6 +19,7 @@
   <div class="container">
     <input type="text" id="textInput" placeholder="请输入你的名字">
     <button onclick="generateImage()">生成证书</button>
+    <button id="saveBtn">保存证书</button>
     <br>
     <canvas id="canvas" width="400" height="300"></canvas>
   </div>
@@ -41,6 +42,7 @@
         ctx.font = "30px Arial";
         ctx.fillStyle = "black"; // 将字体颜色改为黑色
         ctx.textAlign = "center";
+        ctx.fillText("恭喜你!", canvas.width / 2, canvas.height / 2 - 40);
         ctx.fillText(textInput, canvas.width / 2, canvas.height / 2);
 
         // 添加时间戳和自定义文本
@@ -50,6 +52,17 @@
         ctx.fillText("完成了宽窄巷子之谜挑战!", canvas.width / 2, canvas.height - 20);
       };
       bgImage.src = "background.jpg"; // 使用固定的背景图片 URL
+    }
+
+    // 添加保存证书功能
+    document.getElementById("saveBtn").addEventListener("click", saveCertificate);
+
+    function saveCertificate() {
+      var canvas = document.getElementById("canvas");
+      var link = document.createElement('a');
+      link.download = 'certificate.png';
+      link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      link.click();
     }
   </script>
 </body>
